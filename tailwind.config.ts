@@ -83,9 +83,10 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
-        serif: ["var(--font-serif)"],
-        mono: ["var(--font-mono)"],
+        sans: ["Inter", "var(--font-sans)"],
+        serif: ["Georgia", "var(--font-serif)"],
+        mono: ["JetBrains Mono", "var(--font-mono)"],
+        heading: ["Montserrat", "var(--font-sans)"],
       },
       keyframes: {
         "accordion-down": {
