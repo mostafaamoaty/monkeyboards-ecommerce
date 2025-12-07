@@ -7,12 +7,16 @@ import { useCartStore } from "@/lib/cartStore";
 import { useTheme } from "@/components/ThemeProvider";
 import { useState } from "react";
 import logo from "@assets/MONKEY_LOGO.png";
+import logoLight from "@assets/MONKEY_LOGO_LIGHT.png";
 import logoText from "@assets/MONKEY_TEXT.png";
+import logoTextLight from "@assets/MONKEY_TEXT_LIGHT.png";
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Products" },
   { href: "/custom", label: "Build Custom" },
+  { href: "/artists", label: "Artists" },
+  { href: "/partners", label: "Partners" },
   { href: "#", label: "Monkey Planner", badge: "Coming Soon", disabled: true },
 ];
 
@@ -29,12 +33,16 @@ export function Header() {
         <div className="flex h-20 items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3">
             <img
-              src={logo}
+              src={theme === "dark" ? logoLight : logo}
               alt="Monkey Boards"
               className="h-14 w-auto"
               data-testid="img-logo"
             />
-            <img src={logoText} alt="Monkey Boards" className="h-8 w-auto" />
+            <img
+              src={theme === "dark" ? logoTextLight : logoText}
+              alt="Monkey Boards"
+              className="h-8 w-auto"
+            />
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">

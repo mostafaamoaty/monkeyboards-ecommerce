@@ -13,6 +13,8 @@ import Products from "@/pages/Products";
 import ProductDetails from "@/pages/ProductDetails";
 import CustomBuilder from "@/pages/CustomBuilder";
 import Checkout from "@/pages/Checkout";
+import Partners from "@/pages/Partners";
+import Artists from "@/pages/Artists";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -29,6 +31,8 @@ function Router() {
       <Route path="/products/:id" component={ProductDetails} />
       <Route path="/custom" component={CustomBuilder} />
       <Route path="/checkout" component={Checkout} />
+      <Route path="/partners" component={Partners} />
+      <Route path="/artists" component={Artists} />
       <Route component={NotFound} />
     </Switch>
   );

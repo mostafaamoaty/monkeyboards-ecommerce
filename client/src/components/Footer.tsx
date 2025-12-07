@@ -1,15 +1,23 @@
 import { Link } from "wouter";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { SiInstagram, SiFacebook, SiYoutube } from "react-icons/si";
+import { useTheme } from "@/components/ThemeProvider";
 import logo from "@assets/MONKEY_TEXT_LOGO.png";
+import logoLight from "@assets/MONKEY_TEXT_LOGO_LIGHT.png";
 
 export function Footer() {
+  const { theme } = useTheme();
+
   return (
     <footer className="bg-card border-t border-card-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
-            <img src={logo} alt="Monkey Boards" className="h-40 w-auto" />
+            <img
+              src={theme === "dark" ? logoLight : logo}
+              alt="Monkey Boards"
+              className="h-40 w-auto"
+            />
             <p className="text-muted-foreground text-sm max-w-xs">
               Premium handmade guitar pedalboards crafted with passion. Your sound,
               handcrafted.
@@ -57,11 +65,11 @@ export function Footer() {
                 Build Custom
               </Link>
               <Link
-                href="/checkout"
+                href="/partners"
                 className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-                data-testid="link-footer-checkout"
+                data-testid="link-footer-partners"
               >
-                Checkout
+                Our Partners
               </Link>
             </nav>
           </div>
