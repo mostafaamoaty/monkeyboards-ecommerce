@@ -80,6 +80,14 @@ app.use((req, res, next) => {
     await setupVite(httpServer, app);
   }
 
+  // Export app for Vercel serverless functions (only in production/Vercel)
+  if (process.env.VERCEL || (process.env.NODE_ENV === "production" && !process.env.PORT)) {
+    // For Vercel, export the Express app directly (without starting the server)
+    module.exports = app;
+    module.exports.default = app;
+    return;
+  }
+
   // ALWAYS serve the app on the port specified in the environment variable PORT
   // Other ports are firewalled. Default to 5000 if not specified.
   // this serves both the API and the client.
