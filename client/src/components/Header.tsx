@@ -29,7 +29,7 @@ export function Header() {
             <img
               src={logo}
               alt="Monkey Boards"
-              className="h-10 w-auto"
+              className="h-14 w-auto"
               data-testid="img-logo"
             />
           </Link>
