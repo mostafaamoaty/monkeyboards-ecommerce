@@ -14,14 +14,22 @@ export default async function handler(
     process.env.VERCEL = "1";
     
     // Import and initialize the Express app
-    const { default: expressApp } = await import("../dist/index.cjs");
-    app = expressApp;
+    // Using require for CommonJS module to avoid TypeScript errors
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const expressApp = require("../dist/index.cjs");
+    app = expressApp.default || expressApp;
   }
   
   // Handle the request with Express
-  return new Promise((resolve) => {
-    app(req, res, () => {
-      resolve(undefined);
-    });
+  // VercelRequest/VercelResponse are compatible enough with Express req/res
+  return new Promise<void>((resolve) => {
+    if (app) {
+      app(req as any, res as any, () => {
+        resolve();
+      });
+    } else {
+      res.status(500).json({ error: "Failed to initialize application" });
+      resolve();
+    }
   });
 }
