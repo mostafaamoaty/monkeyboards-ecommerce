@@ -1,12 +1,12 @@
 import { Link } from "wouter";
-import { ArrowRight, Hammer, Palette, Truck, Star } from "lucide-react";
+import { ArrowRight, Hammer, Palette, ShieldCheck, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { products } from "@/lib/products";
-import heroImage from "@assets/generated_images/hero_pedalboard_lifestyle_shot.png";
+import heroImage from "@assets/HERO.jpg";
 import craftImage from "@assets/generated_images/craftsman_workshop_scene.png";
-import woodGrain from "@assets/generated_images/wood_grain_detail_closeup.png";
+import woodGrain from "@assets/board-logo.webp";
 
 const features = [
   {
@@ -22,10 +22,10 @@ const features = [
       "Choose your size, wood finish, and color. Build the perfect board for your rig.",
   },
   {
-    icon: Truck,
-    title: "Fast Delivery",
+    icon: ShieldCheck,
+    title: "Lifetime Warranty",
     description:
-      "Quick turnaround on all orders. Your custom board ships within 5-7 business days.",
+      "Lifetime warranty on craftsmanship. We stand behind our work.",
   },
 ];
 
@@ -47,11 +47,8 @@ export default function Home() {
         >
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
           <div className="max-w-2xl space-y-6">
-            <Badge variant="secondary" className="bg-white/10 text-white border-white/20 backdrop-blur-sm">
-              Handcrafted in Egypt
-            </Badge>
             <h1
               className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight"
               data-testid="text-hero-title"
@@ -64,7 +61,7 @@ export default function Home() {
               Premium wooden pedalboards built by musicians, for musicians. Every
               detail crafted with passion.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 justify-center">
               <Link href="/products">
                 <Button
                   size="lg"
@@ -82,7 +79,7 @@ export default function Home() {
                   className="gap-2 font-semibold bg-white/10 border-white/30 text-white backdrop-blur-sm"
                   data-testid="button-build-custom"
                 >
-                  Build Custom
+                  Customize Yours
                 </Button>
               </Link>
             </div>
@@ -113,7 +110,7 @@ export default function Home() {
                     <img
                       src={product.images[0]}
                       alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                   <CardContent className="p-6 space-y-3">

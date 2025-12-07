@@ -10,7 +10,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useCartStore } from "@/lib/cartStore";
 import {
   woodFinishes,
-  colorOptions,
   tierOptions,
   calculateCustomPrice,
 } from "@shared/schema";
@@ -23,8 +22,7 @@ export default function CustomBuilder() {
   const [width, setWidth] = useState(45);
   const [height, setHeight] = useState(20);
   const [tier, setTier] = useState<"1-tier" | "2-tier">("1-tier");
-  const [selectedFinish, setSelectedFinish] = useState(woodFinishes[0].id);
-  const [selectedColor, setSelectedColor] = useState(colorOptions[0].id);
+  const [selectedFinish, setSelectedFinish] = useState<(typeof woodFinishes)[number]["id"]>(woodFinishes[0].id);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-EG", {
@@ -39,23 +37,19 @@ export default function CustomBuilder() {
     height,
     tier,
     woodFinish: selectedFinish,
-    color: selectedColor,
   });
 
   const handleAddToCart = () => {
     const finishName =
       woodFinishes.find((f) => f.id === selectedFinish)?.name || selectedFinish;
-    const colorName =
-      colorOptions.find((c) => c.id === selectedColor)?.name || selectedColor;
 
     addItem({
-      id: `custom-${width}x${height}-${tier}-${selectedFinish}-${selectedColor}-${Date.now()}`,
+      id: `custom-${width}x${height}-${tier}-${selectedFinish}-${Date.now()}`,
       productId: "custom",
       productName: "Custom Pedalboard",
       size: `${width}cm x ${height}cm`,
       tier,
       woodFinish: finishName,
-      color: colorName,
       quantity: 1,
       price: customPrice,
       image: woodGrain,
@@ -90,7 +84,7 @@ export default function CustomBuilder() {
           </h1>
           <p className="text-muted-foreground max-w-2xl">
             Design a pedalboard that fits your exact needs. Choose your
-            dimensions, tier configuration, wood finish, and accent color.
+            dimensions, tier configuration, and wood finish.
           </p>
         </div>
 
@@ -278,48 +272,6 @@ export default function CustomBuilder() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold">
-                    4
-                  </span>
-                  Accent Color
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-3">
-                  {colorOptions.map((color) => (
-                    <button
-                      key={color.id}
-                      onClick={() => setSelectedColor(color.id)}
-                      className={`flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all min-w-[80px] ${
-                        selectedColor === color.id
-                          ? "border-primary"
-                          : "border-border"
-                      }`}
-                      data-testid={`button-color-${color.id}`}
-                    >
-                      <div
-                        className={`relative w-12 h-12 rounded-full border-2 ${
-                          selectedColor === color.id
-                            ? "ring-2 ring-primary/20"
-                            : ""
-                        }`}
-                        style={{ backgroundColor: color.color }}
-                      >
-                        {selectedColor === color.id && (
-                          <Check className="absolute inset-0 m-auto h-5 w-5 text-white drop-shadow-md" />
-                        )}
-                      </div>
-                      <span className="text-xs font-medium text-center">
-                        {color.name}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
           </div>
 
           <div className="lg:col-span-2">
@@ -378,12 +330,6 @@ export default function CustomBuilder() {
                           woodFinishes.find((f) => f.id === selectedFinish)
                             ?.name
                         }
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Accent Color</span>
-                      <span className="font-medium">
-                        {colorOptions.find((c) => c.id === selectedColor)?.name}
                       </span>
                     </div>
                   </div>

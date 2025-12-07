@@ -3,19 +3,8 @@ import { z } from "zod";
 // Wood finish options
 export const woodFinishes = [
   { id: "walnut", name: "Dark Walnut", color: "#4a3728" },
-  { id: "oak", name: "Natural Oak", color: "#c4a35a" },
-  { id: "maple", name: "Light Maple", color: "#e8d5b7" },
-  { id: "ebony", name: "Ebony Black", color: "#1a1a1a" },
-  { id: "cherry", name: "Cherry Red", color: "#8b4513" },
-] as const;
-
-// Color options for edges/accents
-export const colorOptions = [
-  { id: "natural", name: "Natural", color: "#d4a574" },
-  { id: "black", name: "Matte Black", color: "#1a1a1a" },
-  { id: "teal", name: "Teal", color: "#00b6b5" },
-  { id: "cream", name: "Cream", color: "#ffe6cb" },
-  { id: "coral", name: "Coral", color: "#ef4056" },
+  { id: "ebony", name: "Ebony", color: "#1a1a1a" },
+  { id: "natural", name: "Natural Wood", color: "#d4a574" },
 ] as const;
 
 // Tier options
@@ -24,23 +13,23 @@ export const tierOptions = ["1-tier", "2-tier"] as const;
 // Product size definitions
 export const productSizes = [
   {
-    id: "small",
+    id: "standard",
     name: "Compact",
-    description: "Perfect for 3-4 pedals",
+    description: "Perfect for 4-6 pedals",
     dimensions: { width: 30, height: 15 },
     basePrice: 1499,
   },
   {
-    id: "medium",
+    id: "pro",
     name: "Standard",
-    description: "Fits 5-6 pedals comfortably",
+    description: "Fits 10-12 pedals comfortably",
     dimensions: { width: 45, height: 20 },
     basePrice: 1999,
   },
   {
-    id: "large",
+    id: "pro",
     name: "Pro",
-    description: "Full rig with 8-10 pedals",
+    description: "Full rig with up to 16 pedals",
     dimensions: { width: 60, height: 30 },
     basePrice: 2799,
   },
@@ -50,7 +39,7 @@ export const productSizes = [
 export interface Product {
   id: string;
   name: string;
-  size: "small" | "medium" | "large";
+  size: "compact" | "standard" | "pro";
   description: string;
   longDescription: string;
   basePrice: number;
@@ -67,7 +56,6 @@ export interface CartItem {
   size: string;
   tier: string;
   woodFinish: string;
-  color: string;
   quantity: number;
   price: number;
   image: string;
@@ -103,7 +91,6 @@ export interface CustomConfig {
   height: number;
   tier: "1-tier" | "2-tier";
   woodFinish: string;
-  color: string;
 }
 
 // Calculate price for custom pedalboard

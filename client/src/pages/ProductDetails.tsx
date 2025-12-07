@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useCartStore } from "@/lib/cartStore";
 import { getProductById, products } from "@/lib/products";
-import { woodFinishes, colorOptions } from "@shared/schema";
+import { woodFinishes } from "@shared/schema";
 
 export default function ProductDetails() {
   const [, params] = useRoute("/products/:id");
@@ -17,8 +17,7 @@ export default function ProductDetails() {
   const addItem = useCartStore((state) => state.addItem);
 
   const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedFinish, setSelectedFinish] = useState(woodFinishes[0].id);
-  const [selectedColor, setSelectedColor] = useState(colorOptions[0].id);
+  const [selectedFinish, setSelectedFinish] = useState<(typeof woodFinishes)[number]["id"]>(woodFinishes[0].id);
   const [quantity, setQuantity] = useState(1);
 
   const formatPrice = (price: number) => {
@@ -47,17 +46,14 @@ export default function ProductDetails() {
   const handleAddToCart = () => {
     const finishName =
       woodFinishes.find((f) => f.id === selectedFinish)?.name || selectedFinish;
-    const colorName =
-      colorOptions.find((c) => c.id === selectedColor)?.name || selectedColor;
 
     addItem({
-      id: `${product.id}-${selectedFinish}-${selectedColor}-${Date.now()}`,
+      id: `${product.id}-${selectedFinish}-${Date.now()}`,
       productId: product.id,
       productName: product.name,
       size: product.size,
       tier: product.tier,
       woodFinish: finishName,
-      color: colorName,
       quantity,
       price: product.basePrice,
       image: product.images[0],
@@ -93,7 +89,7 @@ export default function ProductDetails() {
               <img
                 src={product.images[selectedImage]}
                 alt={product.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
                 data-testid="img-product-main"
               />
             </div>
@@ -113,7 +109,7 @@ export default function ProductDetails() {
                     <img
                       src={image}
                       alt={`${product.name} view ${index + 1}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </button>
                 ))}
@@ -175,34 +171,6 @@ export default function ProductDetails() {
                   </p>
                 </div>
 
-                <div>
-                  <label className="text-sm font-medium mb-3 block">
-                    Accent Color
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {colorOptions.map((color) => (
-                      <button
-                        key={color.id}
-                        onClick={() => setSelectedColor(color.id)}
-                        className={`relative w-10 h-10 rounded-full border-2 transition-all ${
-                          selectedColor === color.id
-                            ? "border-primary ring-2 ring-primary/20"
-                            : "border-border"
-                        }`}
-                        style={{ backgroundColor: color.color }}
-                        title={color.name}
-                        data-testid={`button-color-${color.id}`}
-                      >
-                        {selectedColor === color.id && (
-                          <Check className="absolute inset-0 m-auto h-4 w-4 text-white drop-shadow-md" />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    {colorOptions.find((c) => c.id === selectedColor)?.name}
-                  </p>
-                </div>
               </div>
 
               <Separator />
@@ -285,7 +253,7 @@ export default function ProductDetails() {
                         <img
                           src={p.images[0]}
                           alt={p.name}
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
                       <CardContent className="p-4 flex flex-col justify-center">

@@ -28,7 +28,6 @@ export const useCartStore = create<CartState>()(
             (i) =>
               i.productId === item.productId &&
               i.woodFinish === item.woodFinish &&
-              i.color === item.color &&
               i.tier === item.tier &&
               !i.isCustom
           );

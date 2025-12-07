@@ -59,7 +59,7 @@ export function CartDrawer() {
                       <img
                         src={item.image}
                         alt={item.productName}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                       />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -74,7 +74,7 @@ export function CartDrawer() {
                           {item.size} &bull; {item.tier}
                         </p>
                         <p>
-                          {item.woodFinish} / {item.color}
+                          {item.woodFinish}
                         </p>
                         {item.customDimensions && (
                           <p>

@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { SiInstagram, SiFacebook, SiYoutube } from "react-icons/si";
-import logo from "@assets/LOGO_PNG_(1)_1765094761339.png";
+import logo from "@assets/MONKEY_TEXT_LOGO.png";
 
 export function Footer() {
   return (
@@ -9,7 +9,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
-            <img src={logo} alt="Monkey Boards" className="h-12 w-auto" />
+            <img src={logo} alt="Monkey Boards" className="h-40 w-auto" />
             <p className="text-muted-foreground text-sm max-w-xs">
               Premium handmade guitar pedalboards crafted with passion. Your sound,
               handcrafted.

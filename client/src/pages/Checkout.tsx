@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { ArrowLeft, CreditCard, Banknote, Loader2, CheckCircle } from "lucide-react";
+import { ArrowLeft, Banknote, Loader2, CheckCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useCartStore } from "@/lib/cartStore";
 import { orderSchema, type OrderFormData } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
+import instapayLogo from "@assets/InstaPay_Logo.png";
 
 export default function Checkout() {
   const [, setLocation] = useLocation();
@@ -376,7 +377,11 @@ export default function Checkout() {
                                   htmlFor="instapay"
                                   className="flex items-center gap-3 cursor-pointer flex-1"
                                 >
-                                  <CreditCard className="h-5 w-5 text-muted-foreground" />
+                                  <img
+                                    src={instapayLogo}
+                                    alt="InstaPay"
+                                    className="h-auto w-5 object-contain"
+                                  />
                                   <div>
                                     <p className="font-medium">Instapay</p>
                                     <p className="text-sm text-muted-foreground">
@@ -432,7 +437,7 @@ export default function Checkout() {
                           <img
                             src={item.image}
                             alt={item.productName}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain"
                           />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -443,7 +448,7 @@ export default function Checkout() {
                             )}
                           </h4>
                           <p className="text-xs text-muted-foreground">
-                            {item.woodFinish} / {item.color}
+                            {item.woodFinish}
                           </p>
                           <p className="text-xs text-muted-foreground">
                             Qty: {item.quantity}

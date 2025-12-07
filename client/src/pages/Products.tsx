@@ -10,9 +10,9 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { products } from "@/lib/products";
 
 const sizeFilters = [
-  { id: "small", label: "Compact (3-4 pedals)" },
-  { id: "medium", label: "Standard (5-6 pedals)" },
-  { id: "large", label: "Pro (8-10 pedals)" },
+  { id: "compact", label: "Compact (4-6 pedals)" },
+  { id: "standard", label: "Standard (10-12 pedals)" },
+  { id: "pro", label: "Pro (up to 16 pedals)" },
 ];
 
 const tierFilters = [
@@ -202,7 +202,7 @@ export default function Products() {
                         <img
                           src={product.images[0]}
                           alt={product.name}
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
                         />
                         <Badge
                           variant="secondary"
