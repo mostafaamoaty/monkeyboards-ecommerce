@@ -1,5 +1,5 @@
-import { useState, useCallback } from "react";
-import { motion } from "framer-motion";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { motion, type PanInfo } from "framer-motion";
 import { Search, ZoomIn, ZoomOut, Trash2, RotateCw, Grid3X3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -92,19 +92,26 @@ function CanvasPedal({ boardPedal, zoom }: { boardPedal: BoardPedal; zoom: numbe
   const { selectedPedalId, selectPedal, updatePedalPosition, rotatePedal, boardSize } =
     usePedalboardStore();
   const isSelected = selectedPedalId === boardPedal.instanceId;
+  const dragRef = useRef<HTMLDivElement>(null);
 
   const pedalWidth = boardPedal.pedal.width * SCALE_FACTOR;
   const pedalHeight = boardPedal.pedal.height * SCALE_FACTOR;
 
-  const handleDrag = (
+
+  const handleDragEnd = (
     _event: MouseEvent | TouchEvent | PointerEvent,
-    info: { delta: { x: number; y: number } }
+    info: PanInfo
   ) => {
-    const deltaX = info.delta.x / zoom;
-    const deltaY = info.delta.y / zoom;
-    const newX = Math.max(0, Math.min(boardPedal.x + deltaX, boardSize.width - pedalWidth));
-    const newY = Math.max(0, Math.min(boardPedal.y + deltaY, boardSize.height - pedalHeight));
-    updatePedalPosition(boardPedal.instanceId, newX, newY);
+    // When using x/y props, calculate new position from current position + offset
+    // info.offset is the drag distance in screen pixels, convert to container coordinates
+    const newX = (boardPedal.x ?? 0) + (info.offset.x / zoom);
+    const newY = (boardPedal.y ?? 0) + (info.offset.y / zoom);
+
+    // Clamp to board boundaries
+    const clampedX = Math.max(0, Math.min(newX, boardSize.width - pedalWidth));
+    const clampedY = Math.max(0, Math.min(newY, boardSize.height - pedalHeight));
+    
+    updatePedalPosition(boardPedal.instanceId, clampedX, clampedY);
   };
 
   const handleRotate = (e: React.MouseEvent) => {
@@ -114,28 +121,31 @@ function CanvasPedal({ boardPedal, zoom }: { boardPedal: BoardPedal; zoom: numbe
 
   return (
     <motion.div
+      ref={dragRef}
       drag
       dragMomentum={false}
-      onDrag={handleDrag}
+      animate={{
+        x: boardPedal.x ?? 0,
+        y: boardPedal.y ?? 0,
+        rotate: boardPedal.rotation ?? 0,
+      }}
+      onDragEnd={handleDragEnd}
       onClick={(e) => {
         e.stopPropagation();
         selectPedal(boardPedal.instanceId);
       }}
       whileDrag={{ scale: 1.02, zIndex: 50 }}
-      className={`absolute cursor-grab active:cursor-grabbing ${
+      className={`absolute cursor-grab active:cursor-grabbing overflow-visible ${
         isSelected ? "ring-2 ring-primary ring-offset-2" : ""
       }`}
       style={{
         width: pedalWidth,
         height: pedalHeight,
-        left: boardPedal.x,
-        top: boardPedal.y,
-        transform: `rotate(${boardPedal.rotation}deg)`,
       }}
       data-testid={`canvas-pedal-${boardPedal.instanceId}`}
     >
       <div
-        className="relative w-full h-full rounded-md flex items-center justify-center overflow-hidden shadow-md border border-black/20"
+        className="relative w-full h-full rounded-md flex items-center justify-center overflow-visible shadow-md border border-black/20"
         style={{ backgroundColor: boardPedal.pedal.color }}
       >
         <img

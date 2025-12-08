@@ -3,6 +3,9 @@ import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
 
+// Declare module for CommonJS compatibility (used after esbuild compilation)
+declare const module: { exports: any };
+
 const app = express();
 const httpServer = createServer(app);
 
@@ -83,7 +86,10 @@ app.use((req, res, next) => {
   // Export app for Vercel serverless functions (only in production/Vercel)
   if (process.env.VERCEL || (process.env.NODE_ENV === "production" && !process.env.PORT)) {
     // For Vercel, export the Express app directly (without starting the server)
+    // Note: This file is compiled to CommonJS by esbuild, so module.exports works at runtime
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     module.exports = app;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     module.exports.default = app;
     return;
   }
