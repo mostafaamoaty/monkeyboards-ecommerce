@@ -17,7 +17,7 @@ const navLinks = [
   { href: "/custom", label: "Build Custom" },
   { href: "/artists", label: "Artists" },
   { href: "/partners", label: "Partners" },
-  { href: "#", label: "Monkey Planner", badge: "Coming Soon", disabled: true },
+  { href: "/planner", label: "Monkey Planner" },
 ];
 
 export function Header() {

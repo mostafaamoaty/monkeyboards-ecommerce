@@ -15,6 +15,7 @@ import CustomBuilder from "@/pages/CustomBuilder";
 import Checkout from "@/pages/Checkout";
 import Partners from "@/pages/Partners";
 import Artists from "@/pages/Artists";
+import PedalboardPlanner from "@/pages/PedalboardPlanner";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -33,6 +34,7 @@ function Router() {
       <Route path="/checkout" component={Checkout} />
       <Route path="/partners" component={Partners} />
       <Route path="/artists" component={Artists} />
+      <Route path="/planner" component={PedalboardPlanner} />
       <Route component={NotFound} />
     </Switch>
   );
